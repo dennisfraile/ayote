@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\EnlacePagoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
+    return view('dashboard');
+})->name('home');
+Route::resource('/enlacepago', EnlacePagoController::class)->names('enlacepago');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -28,10 +30,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('/users', UserController::class)->only(['index','edit','update'])->names('users');
-
+    Route::resource('/users', UserController::class)->middleware('can:admin.user.index')->names('users');
+    Route::resource('/roles', RoleController::class)->middleware('can:admin.role.index')->names('roles');
     Route::get('/transacciones', function () {
         return view('transacciones');
-    })->name('transacciones');
+    })->middleware('can:user.transaccion.dashboard')->name('transacciones');
     
 });

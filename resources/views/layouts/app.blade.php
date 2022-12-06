@@ -12,9 +12,14 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+        
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        
+        
         <!-- Styles -->
+        <link type="text/css" rel="stylesheet" href="{{ asset('output.css') }}" >
         @livewireStyles
+        @powerGridStyles
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -40,6 +45,7 @@
         @stack('modals')
 
         @livewireScripts
+        @powerGridScripts
         <script src="https://pagos.wompi.sv/js/wompi.pagos.js"></script>
     </body>
 </html>
